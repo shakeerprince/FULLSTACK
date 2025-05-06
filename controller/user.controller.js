@@ -15,13 +15,14 @@ const registerUser = async(req, res)=>{
  * send token as email to user
  * send success status to user
  */
+    //get data
     const {name, email, password} = req.body
     if(!name || !email || !password){
        return res.status(400).json({
             message: "All fields are required"
         });
     }
-   
+    //validate   check if user already exists
     try{
         const existingUser = await User.findOne({email})
         if(existingUser){
@@ -29,6 +30,7 @@ const registerUser = async(req, res)=>{
                 message: "User Already Exists"
             })
         }
+        //create a user in database
         const user = await User.create({
             name,
             email,
@@ -39,7 +41,7 @@ const registerUser = async(req, res)=>{
                 message: "User not registered"
             })
         }
-
+            //create a verification token 
         const token  = crypto.randomBytes(32).toString('hex')
         console.log(token);
         user.verificationToken = token

@@ -7,10 +7,6 @@ import db from "./utils/db.js"
 import userRouters from './routes/user.routes.js'
 
 
-
-
-
-
 dotenv.config();
 
 
