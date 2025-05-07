@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import db from "./utils/db.js"
+import cookieParser from "cookie-parser"
 
 //router import
 import userRouters from './routes/user.routes.js'
@@ -15,12 +16,13 @@ const app =  express();
 app.use(
     cors({
         origin: process.env.BASE_URL,
-        methods: ['GET', 'POST']
+        methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+        allowedHeaders: ["Content-Type", "Authorization"]
     })
 )
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
-
+app.use(cookieParser());
 
 
 const port = process.env.PORT || 4000;
